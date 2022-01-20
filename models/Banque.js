@@ -1,4 +1,4 @@
-import { Compte } from './Compte.js';
+import { Courant } from './Courant.js';
 import { Personne } from './Personne.js';
 
 export class Banque {
@@ -22,7 +22,7 @@ export class Banque {
     }
 
     ajouterCompte(newCompte) {
-        if(newCompte.constructor !== Compte.prototype.constructor) throw new TypeError('newCompte is not a Compte type')
+        if(newCompte.constructor !== Courant.prototype.constructor) throw new TypeError('newCompte is not a Compte type')
         if(this.#comptes.has(newCompte.numero)) throw new RangeError('account already setup')
         this.#comptes.set(newCompte.numero, newCompte);
     }
