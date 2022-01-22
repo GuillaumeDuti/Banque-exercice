@@ -1,11 +1,14 @@
 import { Courant } from './Courant.js';
+import { Epargne } from './Epargne.js';
 import { Personne } from './Personne.js';
 
 export class Banque {
     nom = "Newnew banquebanque";
     #comptes;
-    constructor() {
+    constructor(nom, ...comptes) {
+        this.nom = nom;
         this.#comptes= new Map();
+        comptes.forEach( c => this.ajouterCompte(c));
     }
 
     avoirDesComptes(titulaire) {
@@ -22,9 +25,18 @@ export class Banque {
     }
 
     ajouterCompte(newCompte) {
-        if(newCompte.constructor !== Courant.prototype.constructor) throw new TypeError('newCompte is not a Compte type')
+        if(newCompte.constructor !== Courant.prototype.constructor && newCompte.constructor !== Epargne.prototype.constructor) throw new TypeError('newCompte is not a Compte type')
         if(this.#comptes.has(newCompte.numero)) throw new RangeError('account already setup')
         this.#comptes.set(newCompte.numero, newCompte);
+    }
+
+    calculDesInterets(compte, solde) {
+        if(compte.constructor !== Courant.prototype.constructor && compte.constructor !== Epargne.prototype.constructor) throw new TypeError('newCompte is not a Compte type')
+        if(compte.constructor === Epargne.prototype.constructor) compte.depot(solde*0.03) 
+        if(compte.constructor === Courant.prototype.constructor) {
+           if(solde>0) compte.depot(solde*0.015)
+           else return compte.retrait(solde*0.04)
+        }
     }
     
     compte(numero) {

@@ -4,7 +4,7 @@ export class Courant extends Compte {
 
     #ligneDeCredit;
 
-    constructor(numero, solde = 0, titulaire,  ligneDeCredit = -200) {
+    constructor(numero, solde = 0, titulaire,  ligneDeCredit = 200) {
         super(numero, solde, titulaire)
         if (solde > this.Solde + this.LigneDeCredit ) throw new Error("Limite de la ligne de crédit dépassée! Réessayer");
         this.LigneDeCredit      = ligneDeCredit;
@@ -15,10 +15,7 @@ export class Courant extends Compte {
     }
     
     retrait(value) {
-
-        if (this.Solde + this.LigneDeCredit < value) throw new Error("La somme demandée dépasse la limite autorisée. Réessayer");
-
-        super.retrait(value);
+        super.retrait(value, this.#ligneDeCredit);
     }
     
     get LigneDeCredit() {

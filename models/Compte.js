@@ -20,9 +20,10 @@ export class Compte {
         console.log(`Votre nouveau solde s'éleve désormais à ${this.Solde} €`);
     }
     
-    retrait(value) {
+    retrait(value, limite = 0) {
+        if(isNaN(value)) throw new TypeError(`${value} n'est pas un nombre`)
         if (value <= 0) throw new RangeError("La somme doit être positive et supérieur à 0. Réessayer");
-  
+        if (this.Solde + limite < value) throw new Error("La somme demandée dépasse la limite autorisée. Réessayer");
         this.#solde = this.Solde-value;
 
         console.log(`Votre nouveau solde s'éleve désormais à ${this.Solde} €`);

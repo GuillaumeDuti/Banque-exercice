@@ -14,7 +14,6 @@ export class Epargne extends Compte {
     }
     
     retrait(value) {
-        if (this.Solde < value) throw new Error("La somme demandée dépasse la limite autorisée. Réessayer");
         super.retrait(value);
         this.dernierTransfert = new Date();
     }
