@@ -28,7 +28,16 @@ export class Banque {
         if(newCompte.constructor !== Courant.prototype.constructor && newCompte.constructor !== Epargne.prototype.constructor) throw new TypeError('newCompte is not a Compte type')
         if(this.#comptes.has(newCompte.numero)) throw new RangeError('account already setup')
         this.#comptes.set(newCompte.numero, newCompte);
+        newCompte.on("alertNegatif", this.onNegatif);
     }
+
+    // retirerCompte(number) {
+    //     for(compte of this.#comptes) {
+    //         if(compte.numero === number) {
+                
+    //         }
+    //     }
+    // }
 
     calculDesInterets(compte, solde) {
         if(compte.constructor !== Courant.prototype.constructor && compte.constructor !== Epargne.prototype.constructor) throw new TypeError('newCompte is not a Compte type')
@@ -42,6 +51,10 @@ export class Banque {
     compte(numero) {
         if(!this.#comptes.has(numero)) throw new RangeError('no such account')
         return this.#comptes.get(numero)
+    }
+
+    onNegatif(compte) {
+        alert(`Le compte ${compte.numero} est désormais en négatif : ${compte.Solde}`)
     }
 
 }
